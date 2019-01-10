@@ -1,255 +1,128 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <time.h>
-
 #include "menu.h"
-
-
-
 #define FONTSIZE 10
-
 int PrintMenuOS()
-
 {
-
 	int i, j;
-
 	char data_M[FONTSIZE][FONTSIZE] =
-
 	{
-
 		"          ",
-
 		"  *    *  ",
-
 		" ***  *** ",
-
 		" * *  * * ",
-
 		" * *  * * ",
-
 		" *  **  * ",
-
 		" *      * ",
-
 		" *      * ",
-
 		" *      * ",
-
 		"          "
-
 	};
-
 	char data_e[FONTSIZE][FONTSIZE] =
-
 	{
-
 		"          ",
-
 		"          ",
-
 		"    **    ",
-
 		"   *  *   ",
-
 		"  *    *  ",
-
 		"  ******  ",
-
 		"  *       ",
-
 		"   *      ",
-
 		"    ***   ",
-
 		"          "
-
 	};
-
 	char data_n[FONTSIZE][FONTSIZE] =
-
 	{
-
 		"          ",
-
 		"          ",
-
 		"    **    ",
-
 		"   *  *   ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"          "
-
 	};
-
 	char data_u[FONTSIZE][FONTSIZE] =
-
 	{
-
 		"          ",
-
 		"          ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"  *    *  ",
-
 		"   *  **  ",
-
 		"    **  * ",
-
 		"          "
-
 	};
-
 	char data_O[FONTSIZE][FONTSIZE] =
-
 	{
-
 		"          ",
-
 		"   ****   ",
-
 		"  *    *  ",
-
 		" *      * ",
-
 		" *      * ",
-
 		" *      * ",
-
 		" *      * ",
-
 		"  *    *  ",
-
 		"   ****   ",
-
 		"          "
-
 	};
-
 	char data_S[FONTSIZE][FONTSIZE] =
-
 	{
-
 		"          ",
-
 		"    ****  ",
-
 		"   **     ",
-
 		"  **      ",
-
 		"   ***    ",
-
 		"     **   ",
-
 		"      **  ",
-
 		"     **   ",
-
 		"  ****    ",
-
 		"          "
-
 	};
-
-
-
 	for(i=0; i<FONTSIZE; i++)
-
 	{
-
 		for(j=0; j<FONTSIZE; j++)
-
 		{
-
 			printf("%c", data_M[i][j]);
-
 		}
-
 		for(j=0; j<FONTSIZE; j++)
-
 		{
-
 			printf("%c", data_e[i][j]);
-
 		}
-
 		for(j=0; j<FONTSIZE; j++)
-
 		{
-
 			printf("%c", data_n[i][j]);
-
 		}
-
 		for(j=0; j<FONTSIZE; j++)
-
 		{
-
 			printf("%c", data_u[i][j]);
-
 		}
-
 		for(j=0; j<FONTSIZE; j++)
-
 		{
-
 			printf("%c", data_O[i][j]);
-
 		}
-
 		for(j=0; j<FONTSIZE; j++)
-
 		{
-
 			printf("%c", data_S[i][j]);
-
 		}
-
 		printf("\n");
-
 	}
-
-	return 0;
-
+return 0;
 }
-
 
 
 int Quit(int argc, char *argv[])
-
 {
-
 	/* add XXX clean ops */
-
 }
 
-
-
 #include"syswrapper.h"
-
 #define MAX_CONNECT_QUEUE   1024
-
 int Replyhi()
 
 {
@@ -328,8 +201,6 @@ int StartReplyhi(int argc, char *argv[])
 
 }
 
-
-
 int Hello(int argc, char *argv[])
 
 {
@@ -353,31 +224,18 @@ int Hello(int argc, char *argv[])
 
 
 #include <sys/types.h>
-
 #include <sys/socket.h>
-
 #include <netinet/in.h>
-
 #include <stdio.h>
-
 #include <error.h>
-
 #include <stdlib.h>
-
 #include <strings.h>
-
 #include <unistd.h>
-
 #include <string.h>
-
 #include <ctype.h>
-
 #include <errno.h>
-
 #include <arpa/inet.h>
-
 #define SERVER_PORT 8888
-
 #define BUFF_LEN 1024
 
 int httpclient()
@@ -471,107 +329,54 @@ int httpclient()
 }
 
 void udp_server(int fd){
-
 	char buf[BUFF_LEN];
-
 	socklen_t len;
-
 	int count;
-
 	struct sockaddr_in clent_addr;
-
 	while(1){
-
 		memset(buf, 0, BUFF_LEN);
-
 		len = sizeof(clent_addr);
-
 		count = recvfrom(fd, buf, BUFF_LEN, 0, (struct sockaddr*)&clent_addr, &len);
-
 		if(count == -1){
-
 			printf("recieve data fail!\n");
-
 			return;
-
 		}
-
 		printf("msg from client: %s\n",buf);
-
 		memset(buf, 0, BUFF_LEN);
-
 		sprintf(buf, "I have recieved %d bytes data!\n", count);
-
 		printf("msg sent by server: %s\n",buf);
-
 		sendto(fd, buf, BUFF_LEN, 0, (struct sockaddr*)&clent_addr, len);
-
 	}
-
 }
-
-
 
 int udp_server_handler(){
-
 	int server_fd, ret;
-
 	struct sockaddr_in ser_addr; 
-
-
-
 	server_fd = socket(AF_INET, SOCK_DGRAM, 0);
-
 	if(server_fd < 0){
-
 		printf("create socket fail!\n");
-
 		return -1;
-
 	}
-
-
 
 	memset(&ser_addr, 0, sizeof(ser_addr));
-
 	ser_addr.sin_family = AF_INET;
-
 	ser_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-
 	ser_addr.sin_port = htons(SERVER_PORT);
-
 	ret = bind(server_fd, (struct sockaddr*)&ser_addr, sizeof(ser_addr));
-
 	if(ret < 0)
-
 	{
-
 		printf("socket bind fail!\n");
-
 		return -1;
-
 	}
-
-
-
 	udp_server(server_fd);
-
 	close(server_fd);
-
 	return 0;
-
 }
 
-
-
 int start_udp_server(){
-
 	int pid;
-
 	pid = fork();
-
 	if( pid < 0 ){
-
 		exit(1);
 
 	}else if( pid == 0 ){
@@ -587,94 +392,47 @@ int start_udp_server(){
 }
 
 
-
 void udp_client(int fd, struct sockaddr* dst){
-
 	socklen_t len;
-
 	struct sockaddr_in src;
-
 	char buf[BUFF_LEN] = "hello UDP";
-
 	len = sizeof(*dst);
-
 	printf("msg sent by client: %s\n",buf);
-
 	sendto(fd, buf, BUFF_LEN, 0, dst, len);
-
 	memset(buf, 0, BUFF_LEN);
-
 	recvfrom(fd, buf, BUFF_LEN, 0, (struct sockaddr*)&src, &len);
-
 	printf("msg from server: %s\n", buf);
-
 }
-
 
 
 int start_udp_client (int argc, char *argv[]){
-
 	int client_fd;
-
 	struct sockaddr_in ser_addr;
-
-
-
 	client_fd = socket(AF_INET, SOCK_DGRAM, 0);
-
 	if(client_fd < 0)
-
 	{
-
 		printf("create socket fail!\n");
-
 		return -1;
-
 	}
 
-
-
 	memset(&ser_addr, 0, sizeof(ser_addr));
-
 	ser_addr.sin_family = AF_INET;
-
 	ser_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-
 	ser_addr.sin_port = htons(SERVER_PORT);
-
 	udp_client(client_fd, (struct sockaddr*)&ser_addr);
-
-
-
 	close(client_fd);
-
-
-
 	return 0;
-
 }
 
 
-
 #include <sys/ioctl.h>
-
 #include <sys/socket.h>
-
 #include <netinet/in.h>
-
 #include <net/if.h>
-
 #include <arpa/inet.h>
-
- 
-
 #include <unistd.h>
-
 #include <stdio.h>
-
 #define MAX_IFS 64
-
- 
 
 int BringUpNetInterface()
 
@@ -825,27 +583,16 @@ int BringUpNetInterface()
 			printf("Ip Address %s\n", inet_ntoa( ( (struct sockaddr_in *)  &ifr->ifr_addr)->sin_addr)); 
 
 			printf("Device %s -> Ethernet %02x:%02x:%02x:%02x:%02x:%02x\n", ifreq.ifr_name,
-
 				(int) ((unsigned char *) &ifreq.ifr_hwaddr.sa_data)[0],
-
 				(int) ((unsigned char *) &ifreq.ifr_hwaddr.sa_data)[1],
-
 				(int) ((unsigned char *) &ifreq.ifr_hwaddr.sa_data)[2],
-
 				(int) ((unsigned char *) &ifreq.ifr_hwaddr.sa_data)[3],
-
 				(int) ((unsigned char *) &ifreq.ifr_hwaddr.sa_data)[4],
-
 				(int) ((unsigned char *) &ifreq.ifr_hwaddr.sa_data)[5]);
-
 		}
-
 	}
 
- 
-
 	return 0;
-
 }
 
 int main(){
