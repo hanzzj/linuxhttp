@@ -237,6 +237,9 @@ int Hello(int argc, char *argv[])
 #include <arpa/inet.h>
 #define SERVER_PORT 8888
 #define BUFF_LEN 1024
+#define IPSTR "13.250.177.223" //服务器IP地址;
+#define SPORT 80
+#define BUFSIZE 1024
 
 int httpclient()
 {
@@ -255,7 +258,7 @@ int httpclient()
  
         bzero(&servaddr, sizeof(servaddr));
         servaddr.sin_family = AF_INET;
-        servaddr.sin_port = htons(PORT);
+        servaddr.sin_port = htons(SPORT);
         if (inet_pton(AF_INET, IPSTR, &servaddr.sin_addr) <= 0 ){
                 printf("创建网络连接失败,本线程即将终止--inet_pton error!\n");
                 exit(0);
